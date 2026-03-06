@@ -4,10 +4,12 @@ import streamlit as st
 def get_range_for_difficulty(difficulty: str):
     if difficulty == "Easy":
         return 1, 20
+    # FIXME: Normal range is higher than hard range, which doesn't make sense
+    # FIX: Swapped the highs for Normal and hard difficulty, AI suggested setting hard high 500 but I disagreed
     if difficulty == "Normal":
-        return 1, 100
-    if difficulty == "Hard":
         return 1, 50
+    if difficulty == "Hard":
+        return 1, 100
     return 1, 100
 
 
@@ -33,8 +35,9 @@ def check_guess(guess, secret):
     if guess == secret:
         return "Win", "🎉 Correct!"
 
+    # FIXME: The hint messages are backwards
+    # FIX: Accepted Copilot's applied edit to swap hint messages, did the same in exception handling too
     try:
-        # FIXME: The hint messages are backwards
         if guess > secret:
             return "Too High", "📉 Go LOWER!"
         else:
@@ -49,15 +52,17 @@ def check_guess(guess, secret):
 
 
 def update_score(current_score: int, outcome: str, attempt_number: int):
+    # FIXME: Winning penalizes an extra attempt
+    # FIX: Removed the + 1 to attempt_number by refactoring logic into logic_utils.py using Copilot Agent mode
     if outcome == "Win":
-        points = 100 - 10 * (attempt_number + 1)
+        points = 100 - 10 * attempt_number
         if points < 10:
             points = 10
         return current_score + points
 
+    # FIXME: Adds points for "Too High" on even attempts
+    # FIX: Removed the if statement that added points on even attempt numbers by accepting Copilot's applied edit
     if outcome == "Too High":
-        if attempt_number % 2 == 0:
-            return current_score + 5
         return current_score - 5
 
     if outcome == "Too Low":

@@ -11,6 +11,8 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   1: The blue text area is showing that I have the attempts I have left is 1 less than the attempts allowed.
   2: When I submit a guess that's lower than the secret number, the hint tells me to go lower instead of higher, and tells me to go higher when I submit a guess that's higher than the secret number. So the hints are backwards.
   3: Attempts left does not decrement after submitting the first guess.
+  4: Adds points for "Too High" on even attempts.
+  5: Winning penalizes an extra attempt
 
 ---
 
@@ -19,7 +21,14 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
   For this project, I am using GitHub Copilot because I have the student developer pack. I only have experience using Copilot and never used Claude or Gemini for coding. But I will try out the other AI tools and try to get familiar with them in the future projects.
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
+  AI suggested to swap the messages on both return paths:
+    if guess > secret:
+      return "Too High", "📉 Go LOWER!"
+    else:
+      return "Too Low", "📈 Go HIGHER!"
+  After implementing this suggestion, I verified the fix by running the game again and submitted guesses that were higher and lower than the secret number, and the hint messaged were correct.
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+  AI suggested to make the range 1-500 for hard difficulty because the normal difficulty range (1-100) was higher than the hard difficulty range (1-50). I rejected this suggestion because hard difficulty would be way too hard. Instead, I assumed that normal and hard ranges were just mixed up and I swapped them to make normal 1-50 and hard 1-100. I think this change is more reasonable.
 
 ---
 
