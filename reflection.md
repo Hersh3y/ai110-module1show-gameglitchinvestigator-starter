@@ -45,15 +45,20 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
   I ran `pytest tests/test_game_logic.py` which executed the test cases and confirmed all tests passed. The tests validated the hint logic, attempts counter, and scoring system were working correctly across different game scenarios. This gave me confidence that multiple bugs were fixed simultaneously without breaking other features.
 
 - Did AI help you design or understand any tests? How?
-  Yes, AI helped by suggesting specific test cases to validate the hint logic when directions seemed backwards. AI also explained the importance of testing edge cases like avoiding penalties on winning attempts, which helped me understand what the tests should check for.
+  Yes, AI helped by creating the conftest.py file and suggested applying test cases to validate the hint logic when directions seemed backwards. AI also explained the importance of testing edge cases like avoiding penalties on winning attempts, which helped me understand what the tests should check for.
 
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
 - In your own words, explain why the secret number kept changing in the original app.
+  On even attempts, the code converted the secret number from an integer to a string, which changed how the comparison worked. When comparing strings instead of integers, lexicographic ordering applies, which made the logic behave incorrectly. This made it appear as if the secret was changing when really the comparison was changing each attempt.
+
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
+  Streamlit reruns your entire Python script every time the user interacts with the app like clicking a button. Without session state, all your variables would reset to their initial values on each rerun. Session state remembers and saves values across reruns.
+
 - What change did you make that finally gave the game a stable secret number?
+  I removed the if condition that was converting the secret to a string on even attempts. The original code was "if st.session_state.attempts % 2 == 0: secret = str(st.session_state.secret)", which was causing the bug. I removed the if condition so that it always uses the integer value (secret = st.session_state.secret).
 
 ---
 
@@ -61,5 +66,10 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+  I want to make using AI to generate test cases with pytest a habit. I also want to ask AI to generate good commit messages that explain my changes. These two practices make code much easier to maintain and debug in the future.
+
 - What is one thing you would do differently next time you work with AI on a coding task?
+  Next time, I'll provide much better context when prompting AI by attaching or referencing specific files using the # notation (like #app.py or #logic_utils.py). This helps the AI understand the code structure and gives more relevant suggestions.
+
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+  I learned that using context references in prompts (#filename) helps AI provide better suggestions, and combining AI with testing creates a powerful development workflow.
